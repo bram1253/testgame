@@ -107,14 +107,34 @@ function start() {
     player.init();
 }
 
-function loop(speed) { // speed: 60FPS=1, 30FPS=2, 120FPS=0.5
-    
+function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
+    for(var i=0; i<10000000; i++){}
 }
 
 // Run the game
 start();
 
-document.setInterval(function() {
-    // Still have to add speed (see how long it took to run this function), loop(1) is temporary.
-    loop(1);
+// This chunk of code will calculate how long it took the previous tick() to take and pass it in the current one. tick(nextSpeed)
+var nextSpeed = 1;
+
+setInterval(function() {
+    var startDate = new Date();
+    var startTime = startDate.getMilliseconds();
+    
+    tick(nextSpeed);
+    
+    var endDate = new Date();
+    var endTime = endDate.getMilliseconds();
+    
+    
+    var timeTaken;
+    if(startTime > endTime) { // In case startTime=998 and endTime=4 or a similar case
+        timeTaken = (endTime + 1000) - startTime;
+    } else {
+        timeTaken = endTime - startTime;
+    }
+    
+    nextSpeed = 1000/timeTaken;
+    // 1 sec (1000ms) / timeTaken
+    // timeTaken is in milliseconds how long it took to complete one tick()
 }, 1)
