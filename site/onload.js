@@ -1,17 +1,17 @@
+var keysDown = {
+    arrow_left:  false,
+    arrow_right: false,
+    arrow_up:    false,
+    arrow_down:  false,
+    
+    spacebar:    false,
+};
+
 function gameObj() {
     // Variables
     this.gravity = 1; // The gavity, 1=default
     this.speed = 1; // Speed of the game, 1=default
     this.FPS = 30; // Frames per second, default=30
-    
-    this.keysDown = {
-        arrow_left:  false,
-        arrow_right: false,
-        arrow_up:    false,
-        arrow_down:  false,
-        
-        spacebar:    false,
-    };
     
     // Init Variables
     this.height = 480;
@@ -20,42 +20,42 @@ function gameObj() {
     this.HTMLObj = document.getElementById("gameFrame");
     
     // Functions
-    function keyDown(key) {
+    this.keyDown = function(key) {
         switch(key.code) {
             case "ArrowLeft":
-                this.keysDown["arrow_left"] = true;
+                keysDown["arrow_left"] = true;
                 break;
             case "ArrowRight":
-                this.keysDown["arrow_right"] = true;
+                keysDown["arrow_right"] = true;
                 break;
             case "ArrowUp":
-                this.keysDown["arrow_up"] = true;
+                keysDown["arrow_up"] = true;
                 break;
             case "ArrowDown":
-                this.keysDown["arrow_down"] = true;
+                keysDown["arrow_down"] = true;
                 break;
             case "Space":
-                this.keysDown["spacebar"] = true;
+                keysDown["spacebar"] = true;
                 break;
         }
     }
     
-    function keyUp(key) {
+    this.keyUp = function(key) {
         switch(key.code) {
             case "ArrowLeft":
-                this.keysDown["arrow_left"] = false;
+                keysDown["arrow_left"] = false;
                 break;
             case "ArrowRight":
-                this.keysDown["arrow_right"] = false;
+                keysDown["arrow_right"] = false;
                 break;
             case "ArrowUp":
-                this.keysDown["arrow_up"] = false;
+                keysDown["arrow_up"] = false;
                 break;
             case "ArrowDown":
-                this.keysDown["arrow_down"] = false;
+                keysDown["arrow_down"] = false;
                 break;
             case "Space":
-                this.keysDown["spacebar"] = false;
+                keysDown["spacebar"] = false;
                 break;
         }
     }
