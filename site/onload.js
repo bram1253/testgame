@@ -114,7 +114,7 @@ function loop(speed) { // speed: 60FPS=1, 30FPS=2, 120FPS=0.5
 // Run the game
 start();
 
-while(true) {
-    // Time calculation still has to be added, speed(1) is temporary
+document.setInterval(function() {
+    // Still have to add speed (see how long it took to run this function), loop(1) is temporary.
     loop(1);
-}
+}, 1)
