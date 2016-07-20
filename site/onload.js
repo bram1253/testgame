@@ -111,6 +111,7 @@ function loop(speed) { // speed: 60FPS=1, 30FPS=2, 120FPS=0.5
     
 }
 
+// Run the game
 start();
 
 while(true) {
