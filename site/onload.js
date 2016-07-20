@@ -108,7 +108,22 @@ function start() {
 }
 
 function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
+    // Input / Output  -- temporary until gravity has been added
+    if(keysDown.arrow_right) {
+        player.x += player.speed * speed * game.speed;
+    }
+    if(keysDown.arrow_left) {
+        player.x -= player.speed * speed * game.speed;
+    }
+    if(keysDown.arrow_up) {
+        player.y -= player.speed * speed * game.speed;
+    }
+    if(keysDown.arrow_down) {
+        player.y += player.speed * speed * game.speed;
+    }
     
+    // Rendering
+    player.init();
 }
 
 // Run the game
@@ -121,12 +136,10 @@ var startTime = startDate.getMilliseconds();
 
 setInterval(function() {
     tick(nextSpeed);
-    
     var endDate = new Date();
     var endTime = endDate.getMilliseconds();
-    
-    
     var timeTaken;
+    
     if(startTime > endTime) { // In case startTime=998 and endTime=4 or a similar case
         timeTaken = (endTime + 1000) - startTime;
     } else {
@@ -134,7 +147,6 @@ setInterval(function() {
     }
     
     nextSpeed = timeTaken / 1000;
-    
     startDate = new Date();
     startTime = startDate.getMilliseconds();
 }, 1)
