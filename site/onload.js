@@ -11,7 +11,6 @@ function gameObj() {
     // Variables
     this.gravity = 1; // The gavity, 1=default
     this.speed = 1; // Speed of the game, 1=default
-    this.FPS = 30; // Frames per second, default=30
     
     // Init Variables
     this.height = 480;
