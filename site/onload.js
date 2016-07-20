@@ -77,6 +77,7 @@ function playerObj() {
     // Init Variables
     this.x = 0;
     this.y = 0;
+    this.speed = 200; // How much pixels the player should move per second.
     this.height = 40;
     this.width = 40;
     this.color = "Red";
