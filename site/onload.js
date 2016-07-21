@@ -14,6 +14,74 @@ var keysDown = {
 };
 
 
+// ==== Events ==== \\
+keyDown = function(key) {
+    switch(key.code) {
+        case "ArrowLeft":
+            keysDown["arrow_left"] = true;
+            break;
+        case "ArrowRight":
+            keysDown["arrow_right"] = true;
+            break;
+        case "ArrowUp":
+            keysDown["arrow_up"] = true;
+            break;
+        case "ArrowDown":
+            keysDown["arrow_down"] = true;
+            break;
+        case "Space":
+            keysDown["spacebar"] = true;
+            break;
+        case "KeyW":
+            keysDown["key_w"] = true;
+            break;
+        case "KeyA":
+            keysDown["key_a"] = true;
+            break;
+        case "KeyS":
+            keysDown["key_s"] = true;
+            break;
+        case "KeyD":
+            keysDown["key_d"] = true;
+            break;
+    }
+}
+    
+keyUp = function(key) {
+    switch(key.code) {
+        case "ArrowLeft":
+            keysDown["arrow_left"] = false;
+            break;
+        case "ArrowRight":
+            keysDown["arrow_right"] = false;
+            break;
+        case "ArrowUp":
+            keysDown["arrow_up"] = false;
+            break;
+        case "ArrowDown":
+            keysDown["arrow_down"] = false;
+            break;
+        case "Space":
+            keysDown["spacebar"] = false;
+            break;
+        case "KeyW":
+            keysDown["key_w"] = false;
+            break;
+        case "KeyA":
+            keysDown["key_a"] = false;
+            break;
+        case "KeyS":
+            keysDown["key_s"] = false;
+            break;
+        case "KeyD":
+            keysDown["key_d"] = false;
+        break;
+    }
+}
+
+document.onkeydown = this.keyDown;
+document.onkeyup = this.keyUp;
+
 
 // === Objects ==== \\
 function gameObj() {
@@ -27,78 +95,11 @@ function gameObj() {
     this.color = "White";
     this.HTMLObj = document.getElementById("gameFrame");
     
-    // Functions
-    this.keyDown = function(key) {
-        switch(key.code) {
-            case "ArrowLeft":
-                keysDown["arrow_left"] = true;
-                break;
-            case "ArrowRight":
-                keysDown["arrow_right"] = true;
-                break;
-            case "ArrowUp":
-                keysDown["arrow_up"] = true;
-                break;
-            case "ArrowDown":
-                keysDown["arrow_down"] = true;
-                break;
-            case "Space":
-                keysDown["spacebar"] = true;
-                break;
-            case "KeyW":
-                keysDown["key_w"] = true;
-                break;
-            case "KeyA":
-                keysDown["key_a"] = true;
-                break;
-            case "KeyS":
-                keysDown["key_s"] = true;
-                break;
-            case "KeyD":
-                keysDown["key_d"] = true;
-                break;
-        }
-    }
-    
-    this.keyUp = function(key) {
-        switch(key.code) {
-            case "ArrowLeft":
-                keysDown["arrow_left"] = false;
-                break;
-            case "ArrowRight":
-                keysDown["arrow_right"] = false;
-                break;
-            case "ArrowUp":
-                keysDown["arrow_up"] = false;
-                break;
-            case "ArrowDown":
-                keysDown["arrow_down"] = false;
-                break;
-            case "Space":
-                keysDown["spacebar"] = false;
-                break;
-            case "KeyW":
-                keysDown["key_w"] = false;
-                break;
-            case "KeyA":
-                keysDown["key_a"] = false;
-                break;
-            case "KeyS":
-                keysDown["key_s"] = false;
-                break;
-            case "KeyD":
-                keysDown["key_d"] = false;
-                break;
-        }
-    }
-    
     // Init
     this.init = function() {
         this.HTMLObj.style["height"] = this.height;
         this.HTMLObj.style["width"] = this.width;
         this.HTMLObj.style["background-color"] = this.color;
-        document.onkeydown = this.keyDown;
-        document.onkeyup = this.keyUp;
     }
 }
 
@@ -117,8 +118,6 @@ function playerObj() {
     this.width = 40;
     this.color = "Red";
     this.HTMLObj = document.getElementById("player");
-    
-    // Functions
     
     // Init
     this.init = function() {
