@@ -78,6 +78,7 @@ function playerObj() {
     this.x = 0;
     this.y = 0;
     this.speed = 200; // How much pixels the player should move per second.
+    this.force = 0; // gravity
     this.height = 40;
     this.width = 40;
     this.color = "Red";
@@ -106,6 +107,17 @@ function collisionCheck(x, y) {
     return {x, y};
 }
 
+function applyGravity(speed) {
+    // Still have to add enemies in here (when they are added)!
+    if(collisionCheck(player.x, player.y+1).y < player.y+1) { // If on top of something
+        player.force = 0;
+    } else { // If not on top of something
+        player.force += (game.gravity + (player.force*0.5))*speed*game.speed;
+    }
+    
+    player.y = collisionCheck(player.x, player.y + player.force).y;
+}
+
 // Main
 var game = new gameObj();
 var player = new playerObj();
@@ -116,6 +128,8 @@ function start() {
 }
 
 function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
+    applyGravity(speed);
+    
     // Input / Output  -- temporary until gravity has been added
     if(keysDown.arrow_right) {
         player.x = collisionCheck(player.x + (player.speed * speed * game.speed), player.y).x;
