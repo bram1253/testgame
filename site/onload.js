@@ -13,7 +13,7 @@ var keysDown = {
 // === Objects ==== \\
 function gameObj() {
     // Variables
-    this.gravity = 2; // The gavity, 1=default
+    this.gravity = 1000; // The gavity, 1000=default
     this.speed = 1; // Speed of the game, 1=default
     
     // Init Variables
@@ -83,7 +83,7 @@ function playerObj() {
     this.y = 0;
     this.speed = 200; // How much pixels the player should move per second.
     this.force = 0; // gravity
-    this.jumpForce = 1;
+    this.jumpForce = 500;
     this.height = 40;
     this.width = 40;
     this.color = "Red";
@@ -117,31 +117,44 @@ function collisionCheck(x, y) {
     return {x, y};
 }
 
+function onGround(x, y) {
+    if(collisionCheck(x, Math.floor(y)+1).y < Math.floor(player.y)+1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function hittingRoof(x, y) {
+    if(collisionCheck(x, Math.floor(y)-1).y < Math.floor(player.y)-1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function applyGravity(speed) {
     // Still have to add enemies in here (when they are added)!
     
-    if(player.force >= 0) { // If there is a downwards force
-        if(collisionCheck(player.x, Math.floor(player.y)+1).y < Math.floor(player.y)+1) { // If on top of something
-            player.force = 0;
-        } else { // If not on top of something
-            player.force += (game.gravity)*speed*game.speed;
-        }
+    // Apply the force
+    player.force += (game.gravity * game.speed)*speed;
+    
+    // If they are on the ground and there is a downwards force
+    if(onGround(player.x, player.y) && player.force >= 0) {
+        player.force = 0;
     }
     
-    else
-    
-    { // If there is an upwards force
-        if(collisionCheck(player.x, player.y-1).y < player.y-1) { // If they hit a roof
-            player.force = 0;
-        } else {
-            player.force += (game.gravity)*speed*game.speed;
-        }
+    // If they are hitting a roof and there is an upwards force
+    if(hittingRoof(player.x, player.y) && player.force < 0) {
+        player.force = 0;
     }
     
-    player.y = collisionCheck(player.x, player.y + player.force).y;
+    // Apple the positioning
+    var newY = player.y + (player.force * speed);
+    player.y = collisionCheck(player.x, newY).y;
 }
 
-function handleJumping() {
+function handleJumping(speed) {
     if(keysDown.arrow_up || keysDown.spacebar) {
         if(collisionCheck(player.x, player.y+1).y < player.y+1) { // If on top of something
             player.force = -player.jumpForce;
@@ -171,7 +184,7 @@ function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
         player.x = collisionCheck(player.x - (player.speed * speed * game.speed), player.y).x;
     }
     
-    handleJumping();
+    handleJumping(speed);
     
     // Rendering
     player.init();
@@ -183,7 +196,7 @@ function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
 start();
 
 // This chunk of code will calculate how long it took the previous tick() to take and pass it in the current one. tick(nextSpeed)
-var nextSpeed = 1;
+var nextSpeed = 0;
 var startDate = new Date();
 var startTime = startDate.getMilliseconds();
 
@@ -198,6 +211,8 @@ setInterval(function() {
     } else {
         timeTaken = endTime - startTime;
     }
+    
+    //console.log(1000 / timeTaken);
     
     nextSpeed = timeTaken / 1000;
     startDate = new Date();
