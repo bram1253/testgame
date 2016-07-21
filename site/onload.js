@@ -97,6 +97,14 @@ function playerObj() {
     }
 }
 
+//Functions
+function collisionCheck(x, y) {
+    if(y > game.height - player.height) {
+        y = game.height - player.height;
+    }
+    
+    return {x, y};
+}
 
 // Main
 var game = new gameObj();
@@ -110,16 +118,16 @@ function start() {
 function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
     // Input / Output  -- temporary until gravity has been added
     if(keysDown.arrow_right) {
-        player.x += player.speed * speed * game.speed;
+        player.x = collisionCheck(player.x + (player.speed * speed * game.speed), player.y).x;
     }
     if(keysDown.arrow_left) {
-        player.x -= player.speed * speed * game.speed;
+        player.x = collisionCheck(player.x - (player.speed * speed * game.speed), player.y).x;
     }
     if(keysDown.arrow_up) {
-        player.y -= player.speed * speed * game.speed;
+        player.y = collisionCheck(player.x, player.y - (player.speed * speed * game.speed)).y;
     }
     if(keysDown.arrow_down) {
-        player.y += player.speed * speed * game.speed;
+        player.y = collisionCheck(player.x, player.y + player.speed * speed * game.speed).y;
     }
     
     // Rendering
