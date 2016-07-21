@@ -9,7 +9,7 @@ var keysDown = {
 
 function gameObj() {
     // Variables
-    this.gravity = 1; // The gavity, 1=default
+    this.gravity = 2; // The gavity, 1=default
     this.speed = 1; // Speed of the game, 1=default
     
     // Init Variables
@@ -79,6 +79,7 @@ function playerObj() {
     this.y = 0;
     this.speed = 200; // How much pixels the player should move per second.
     this.force = 0; // gravity
+    this.jumpForce = 1;
     this.height = 40;
     this.width = 40;
     this.color = "Red";
@@ -104,18 +105,42 @@ function collisionCheck(x, y) {
         y = game.height - player.height;
     }
     
+    if(x==NaN)x=player.x; // Failsafe
+    if(y==NaN)y=player.y; // Failsafe
+    
     return {x, y};
 }
 
 function applyGravity(speed) {
     // Still have to add enemies in here (when they are added)!
-    if(collisionCheck(player.x, player.y+1).y < player.y+1) { // If on top of something
-        player.force = 0;
-    } else { // If not on top of something
-        player.force += (game.gravity + (player.force*0.5))*speed*game.speed;
+    
+    if(player.force >= 0) { // If there is a downwards force
+        if(collisionCheck(player.x, Math.floor(player.y)+1).y < Math.floor(player.y)+1) { // If on top of something
+            player.force = 0;
+        } else { // If not on top of something
+            player.force += (game.gravity)*speed*game.speed;
+        }
+    }
+    
+    else
+    
+    { // If there is an upwards force
+        if(collisionCheck(player.x, player.y-1).y < player.y-1) { // If they hit a roof
+            player.force = 0;
+        } else {
+            player.force += (game.gravity)*speed*game.speed;
+        }
     }
     
     player.y = collisionCheck(player.x, player.y + player.force).y;
+}
+
+function handleJumping() {
+    if(keysDown.arrow_up || keysDown.spacebar) {
+        if(collisionCheck(player.x, player.y+1).y < player.y+1) { // If on top of something
+            player.force = -player.jumpForce;
+        }
+    }
 }
 
 // Main
@@ -137,12 +162,8 @@ function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
     if(keysDown.arrow_left) {
         player.x = collisionCheck(player.x - (player.speed * speed * game.speed), player.y).x;
     }
-    if(keysDown.arrow_up) {
-        player.y = collisionCheck(player.x, player.y - (player.speed * speed * game.speed)).y;
-    }
-    if(keysDown.arrow_down) {
-        player.y = collisionCheck(player.x, player.y + player.speed * speed * game.speed).y;
-    }
+    
+    handleJumping();
     
     // Rendering
     player.init();
