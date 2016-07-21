@@ -6,6 +6,11 @@ var keysDown = {
     arrow_down:  false,
     
     spacebar:    false,
+    
+    key_w: false,
+    key_a: false,
+    key_s: false,
+    key_d: false,
 };
 
 
@@ -40,6 +45,18 @@ function gameObj() {
             case "Space":
                 keysDown["spacebar"] = true;
                 break;
+            case "KeyW":
+                keysDown["key_w"] = true;
+                break;
+            case "KeyA":
+                keysDown["key_a"] = true;
+                break;
+            case "KeyS":
+                keysDown["key_s"] = true;
+                break;
+            case "KeyD":
+                keysDown["key_d"] = true;
+                break;
         }
     }
     
@@ -59,6 +76,18 @@ function gameObj() {
                 break;
             case "Space":
                 keysDown["spacebar"] = false;
+                break;
+            case "KeyW":
+                keysDown["key_w"] = false;
+                break;
+            case "KeyA":
+                keysDown["key_a"] = false;
+                break;
+            case "KeyS":
+                keysDown["key_s"] = false;
+                break;
+            case "KeyD":
+                keysDown["key_d"] = false;
                 break;
         }
     }
@@ -155,7 +184,7 @@ function applyGravity(speed) {
 }
 
 function handleJumping(speed) {
-    if(keysDown.arrow_up || keysDown.spacebar) {
+    if(keysDown.arrow_up || keysDown.spacebar || keysDown.key_w) {
         if(collisionCheck(player.x, player.y+1).y < player.y+1) { // If on top of something
             player.force = -player.jumpForce;
         }
@@ -177,10 +206,10 @@ function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
     applyGravity(speed);
     
     // Input / Output  -- temporary until gravity has been added
-    if(keysDown.arrow_right) {
+    if(keysDown.arrow_right || keysDown.key_d) {
         player.x = collisionCheck(player.x + (player.speed * speed * game.speed), player.y).x;
     }
-    if(keysDown.arrow_left) {
+    if(keysDown.arrow_left || keysDown.key_a) {
         player.x = collisionCheck(player.x - (player.speed * speed * game.speed), player.y).x;
     }
     
