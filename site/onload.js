@@ -1,3 +1,4 @@
+// === Variables === \\ 
 var keysDown = {
     arrow_left:  false,
     arrow_right: false,
@@ -7,6 +8,9 @@ var keysDown = {
     spacebar:    false,
 };
 
+
+
+// === Objects ==== \\
 function gameObj() {
     // Variables
     this.gravity = 2; // The gavity, 1=default
@@ -99,7 +103,9 @@ function playerObj() {
     }
 }
 
-//Functions
+
+
+// === Functions === \\
 function collisionCheck(x, y) {
     if(y > game.height - player.height) {
         y = game.height - player.height;
@@ -143,7 +149,9 @@ function handleJumping() {
     }
 }
 
-// Main
+
+
+// === Main ==== \\
 var game = new gameObj();
 var player = new playerObj();
 
@@ -169,7 +177,9 @@ function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
     player.init();
 }
 
-// Run the game
+
+
+// === Run the game === \\
 start();
 
 // This chunk of code will calculate how long it took the previous tick() to take and pass it in the current one. tick(nextSpeed)
