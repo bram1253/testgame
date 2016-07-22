@@ -232,7 +232,7 @@ function handleJumping(speed) {
 // === Main ==== \\
 var game = new gameObj();
 var player = new playerObj();
-var tmp_testplatform = new platformObj("platform1");
+var tmp_testplatform = new platformObj();
 
 function start() {
     game.init();
