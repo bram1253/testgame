@@ -1,5 +1,7 @@
 // === Variables === \\
 var objects = new Array();
+var platformID = 0; // The ID of the next platform
+var platformObjects = document.getElementById("platformObjects");
 
 var keysDown = {
     arrow_left:  false,
@@ -135,23 +137,34 @@ function playerObj() {
     }
 }
 
-function platformObj(objId) {
+function platformObj() {
     this.x = 0;
     this.y = 0;
     
     this.height = 20;
     this.width = 120;
     this.color = "Black";
-    this.HTMLObj = document.getElementById(objId);
+    this.HTMLObj;
+    this.platformName;
+    
+    this.makePlatform = function() {
+        platformName = "platform_" + platformID;
+        var insertCode = "<div id=\"" + platformName + "\" class=\"platform\"></div>"
+        
+        platformObjects.innerHTML = platformObjects.innerHTML + insertCode + "\n";
+        HTMLObj = document.getElementById(platformName);
+        
+        platformID++;
+    }
     
     this.init = function() {
-        this.HTMLObj.style["background-color"] = this.color;
+        HTMLObj.style["background-color"] = this.color;
         
-        this.HTMLObj.style["height"] = this.height;
-        this.HTMLObj.style["width"] = this.width;
+        HTMLObj.style["height"] = this.height;
+        HTMLObj.style["width"] = this.width;
         
-        this.HTMLObj.style["left"] = this.x;
-        this.HTMLObj.style["top"] = this.y;
+        HTMLObj.style["left"] = this.x;
+        HTMLObj.style["top"] = this.y;
     }
 }
 
@@ -224,6 +237,7 @@ var tmp_testplatform = new platformObj("platform1");
 function start() {
     game.init();
     player.init();
+    tmp_testplatform.makePlatform(); // tmp
     tmp_testplatform.x = 200; // tmp
     tmp_testplatform.y = 400; // tmp
     tmp_testplatform.init();  // tmp
