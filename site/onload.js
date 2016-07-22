@@ -140,9 +140,9 @@ function platformObj(objId) {
     this.y = 0;
     
     this.height = 20;
-    this.width = 80;
+    this.width = 120;
     this.color = "Black";
-    this.HTMLObj = document.getElementById("objId");
+    this.HTMLObj = document.getElementById(objId);
     
     this.init = function() {
         this.HTMLObj.style["background-color"] = this.color;
@@ -219,10 +219,14 @@ function handleJumping(speed) {
 // === Main ==== \\
 var game = new gameObj();
 var player = new playerObj();
+var tmp_testplatform = new platformObj("platform1");
 
 function start() {
     game.init();
     player.init();
+    tmp_testplatform.x = 200; // tmp
+    tmp_testplatform.y = 400; // tmp
+    tmp_testplatform.init();  // tmp
 }
 
 function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
@@ -240,6 +244,9 @@ function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
     
     // Rendering
     player.init();
+    
+    // Temporary test platform
+    tmp_testplatform.init();
 }
 
 
