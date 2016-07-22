@@ -147,15 +147,15 @@ function platformObj() {
     this.HTMLObj;
     this.platformName;
     
-    this.makePlatform = function() {
+    // Make the platform
         platformName = "platform_" + platformID;
         var insertCode = "<div id=\"" + platformName + "\" class=\"platform\"></div>"
-        
+
         platformObjects.innerHTML = platformObjects.innerHTML + insertCode + "\n";
         HTMLObj = document.getElementById(platformName);
-        
+
         platformID++;
-    }
+    // End making the platform
     
     this.init = function() {
         HTMLObj.style["background-color"] = this.color;
@@ -237,7 +237,6 @@ var tmp_testplatform = new platformObj("platform1");
 function start() {
     game.init();
     player.init();
-    tmp_testplatform.makePlatform(); // tmp
     tmp_testplatform.x = 200; // tmp
     tmp_testplatform.y = 400; // tmp
     tmp_testplatform.init();  // tmp
