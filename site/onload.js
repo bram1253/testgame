@@ -14,6 +14,7 @@ var keysDown = {
 };
 
 
+
 // ==== Events ==== \\
 keyDown = function(key) {
     switch(key.code) {
@@ -81,6 +82,7 @@ keyUp = function(key) {
 
 document.onkeydown = this.keyDown;
 document.onkeyup = this.keyUp;
+
 
 
 // === Objects ==== \\
