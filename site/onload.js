@@ -1,4 +1,6 @@
-// === Variables === \\ 
+// === Variables === \\
+var objects = new Array();
+
 var keysDown = {
     arrow_left:  false,
     arrow_right: false,
@@ -122,6 +124,26 @@ function playerObj() {
     this.HTMLObj = document.getElementById("player");
     
     // Init
+    this.init = function() {
+        this.HTMLObj.style["background-color"] = this.color;
+        
+        this.HTMLObj.style["height"] = this.height;
+        this.HTMLObj.style["width"] = this.width;
+        
+        this.HTMLObj.style["left"] = this.x;
+        this.HTMLObj.style["top"] = this.y;
+    }
+}
+
+function platformObj(objId) {
+    this.x = 0;
+    this.y = 0;
+    
+    this.height = 20;
+    this.width = 80;
+    this.color = "Black";
+    this.HTMLObj = document.getElementById("objId");
+    
     this.init = function() {
         this.HTMLObj.style["background-color"] = this.color;
         
