@@ -189,13 +189,13 @@ function collisionCheck(x, y) {
                            y = obj.y - player.height;
                        }
                        if(player.y > y) {
-                           y = obj.y + obj.height;
+                           y = obj.y + obj.height; // If the player is on the bottom
                        }
                        if(player.x < x) {
-                           x = obj.x - player.width;
+                           x = obj.x - player.width; // If the player is on the left
                        }
                        if(player.x > x) {
-                           x = obj.x + obj.width;
+                           x = obj.x + obj.width; // if the player is on the right
                        }
                    }
                }
