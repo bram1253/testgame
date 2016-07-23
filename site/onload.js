@@ -153,7 +153,9 @@ function platformObj() {
 
         platformObjects.innerHTML = platformObjects.innerHTML + insertCode + "\n";
         HTMLObj = document.getElementById(platformName);
-
+        
+        objects[platformID] = this; // Add the object in the objects array, each platformID should be unique and start with 0
+        
         platformID++;
     // End making the platform
     
@@ -175,6 +177,13 @@ function collisionCheck(x, y) {
     if(y > game.height - player.height) {
         y = game.height - player.height;
     }
+    
+    for(i=0; i<objects.length; i++) {
+        var obj = objects[i];
+        
+        
+    }
+    
     
     if(x==NaN)x=player.x; // Failsafe
     if(y==NaN)y=player.y; // Failsafe
@@ -215,7 +224,7 @@ function applyGravity(speed) {
     }
     
     // Apple the positioning
-    var newY = player.y + (player.force * speed);
+    var newY = player.y + (player.force * speed * game.speed);
     player.y = collisionCheck(player.x, newY).y;
 }
 
