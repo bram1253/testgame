@@ -181,10 +181,10 @@ function collisionCheck(x, y) {
     for(i=0; i<objects.length; i++) {
         var obj = objects[i];
         
-        if((Number(player.y) + Number(player.height)) > Number(obj.y)) { // If the player is lower than the top platform
-           if(Number(player.y) < (Number(obj.y) + Number(obj.height))) { // If the player is higher than the bottom of the platform
-               if((Number(player.x) + Number(player.width)) > Number(obj.x)) { // If the player is right to the left of the platform
-                   if(Number(player.x) < (Number(obj.x) + Number(obj.width))) { // If the player is left to the right of the platform
+        if((Number(y) + Number(player.height)) > Number(obj.y)) { // If the player is lower than the top platform
+           if(Number(y) < (Number(obj.y) + Number(obj.height))) { // If the player is higher than the bottom of the platform
+               if((Number(x) + Number(player.width)) > Number(obj.x)) { // If the player is right to the left of the platform
+                   if(Number(x) < (Number(obj.x) + Number(obj.width))) { // If the player is left to the right of the platform
                        
                    }
                }
