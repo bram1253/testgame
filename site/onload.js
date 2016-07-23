@@ -219,7 +219,7 @@ function onGround(x, y) {
 }
 
 function hittingRoof(x, y) {
-    if(collisionCheck(x, Math.floor(y)-1).y < Math.floor(player.y)-1) {
+    if(collisionCheck(x, Math.floor(y)-1).y > Math.floor(player.y)-1) {
         return true;
     } else {
         return false;
