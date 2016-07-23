@@ -204,8 +204,8 @@ function collisionCheck(x, y) {
     }
     
     
-    if(x==NaN)x=player.x; // Failsafe
-    if(y==NaN)y=player.y; // Failsafe
+    if(x==NaN) x=player.x; // Failsafe
+    if(y==NaN) y=player.y; // Failsafe
     
     return {x, y};
 }
