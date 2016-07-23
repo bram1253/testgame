@@ -185,11 +185,17 @@ function collisionCheck(x, y) {
            if(Number(y) < (Number(obj.y) + Number(obj.height))) { // If the player is higher than the bottom of the platform
                if((Number(x) + Number(player.width)) > Number(obj.x)) { // If the player is right to the left of the platform
                    if(Number(x) < (Number(obj.x) + Number(obj.width))) { // If the player is left to the right of the platform
-                       if((player.y + player.height) - obj.height/2 < obj.y) { // If the player is on top
+                       if(player.y < y) { // If the player is on top
                            y = obj.y - player.height;
                        }
-                       if(player.y + obj.height/2 > obj.y + obj.height) { // If the player is at the bototm
+                       if(player.y > y) {
                            y = obj.y + obj.height;
+                       }
+                       if(player.x < x) {
+                           x = obj.x - player.width;
+                       }
+                       if(player.x > x) {
+                           x = obj.x + obj.width;
                        }
                    }
                }
