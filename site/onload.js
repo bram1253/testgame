@@ -122,7 +122,7 @@ function playerObj() {
     this.jumpForce = 500;
     this.height = 40;
     this.width = 40;
-    this.color = "Red";
+    this.color = "MediumPurple";
     this.HTMLObj = document.getElementById("player");
     
     // Init
