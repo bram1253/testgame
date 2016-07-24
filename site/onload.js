@@ -109,6 +109,8 @@ document.onkeyup = this.keyUp;
 // === Objects ==== \\
 function gameObj() {
     // Variables
+    this.logFPS = false;
+    
     this.gravity = 1000; // The gavity, 1000=default
     this.speed = 1; // Speed of the game, 1=default
     
@@ -360,7 +362,9 @@ setInterval(function() {
         timeTaken = endTime - startTime;
     }
     
-    //console.log(1000 / timeTaken);
+    if(game.logFPS) {
+        console.log(1000 / timeTaken);
+    }
     
     nextSpeed = timeTaken / 1000;
     startDate = new Date();
