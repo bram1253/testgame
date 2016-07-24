@@ -201,14 +201,14 @@ function collisionCheck(x, y) {
     if(y > game.height - player.height + game.cameraY) {
         y = game.height - player.height + game.cameraY;
     }
-    if(x > game.width - player.height + game.cameraX) {
-        x = game.width - player.height + game.cameraX;
+    if(x > game.width - player.height + game.cameraX - game.cameraBorderX) {
+        x = game.width - player.height + game.cameraX - game.cameraBorderX;
     }
     if(y < game.cameraY) {
         y = game.cameraY;
     }
-    if(x < game.cameraX) {
-        x = game.cameraX;
+    if(x < game.cameraX + game.cameraBorderX) {
+        x = game.cameraX + game.cameraBorderX;
     }
     
     for(i=0; i<objects.length; i++) {
