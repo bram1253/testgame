@@ -95,6 +95,9 @@ function gameObj() {
     this.gravity = 1000; // The gavity, 1000=default
     this.speed = 1; // Speed of the game, 1=default
     
+    this.cameraX = 0; // camera
+    this.cameraY = 0; // camera
+    
     // Init Variables
     this.height = 480;
     this.width = 640;
@@ -132,8 +135,8 @@ function playerObj() {
         this.HTMLObj.style["height"] = this.height;
         this.HTMLObj.style["width"] = this.width;
         
-        this.HTMLObj.style["left"] = this.x;
-        this.HTMLObj.style["top"] = this.y;
+        this.HTMLObj.style["left"] = this.x - game.cameraX;
+        this.HTMLObj.style["top"] = this.y - game.cameraY;
     }
 }
 
@@ -165,8 +168,8 @@ function platformObj() {
         HTMLObj.style["height"] = this.height;
         HTMLObj.style["width"] = this.width;
         
-        HTMLObj.style["left"] = this.x;
-        HTMLObj.style["top"] = this.y;
+        HTMLObj.style["left"] = this.x - game.cameraX;
+        HTMLObj.style["top"] = this.y - game.cameraY;
     }
 }
 
@@ -174,17 +177,17 @@ function platformObj() {
 
 // === Functions === \\
 function collisionCheck(x, y) {
-    if(y > game.height - player.height) {
-        y = game.height - player.height;
+    if(y > game.height - player.height + game.cameraY) {
+        y = game.height - player.height + game.cameraY;
     }
-    if(x > game.width - player.height) {
-        x = game.width - player.height;
+    if(x > game.width - player.height + game.cameraX) {
+        x = game.width - player.height + game.cameraX;
     }
-    if(y < 0) {
-        y = 0;
+    if(y < game.cameraY) {
+        y = game.cameraY;
     }
-    if(x < 0) {
-        x = 0;
+    if(x < game.cameraX) {
+        x = game.cameraX;
     }
     
     for(i=0; i<objects.length; i++) {
