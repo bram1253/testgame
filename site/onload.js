@@ -177,6 +177,15 @@ function collisionCheck(x, y) {
     if(y > game.height - player.height) {
         y = game.height - player.height;
     }
+    if(x > game.width - player.height) {
+        x = game.width - player.height;
+    }
+    if(y < 0) {
+        y = 0;
+    }
+    if(x < 0) {
+        x = 0;
+    }
     
     for(i=0; i<objects.length; i++) {
         var obj = objects[i];
