@@ -198,16 +198,21 @@ function platformObj() {
 
 // === Functions === \\
 function collisionCheck(x, y) {
+    var moveCameraX = 0;
+    var moveCameraY = 0;
+    
     if(y > game.height - player.height + game.cameraY) {
         y = game.height - player.height + game.cameraY;
     }
     if(x > game.width - player.height + game.cameraX - game.cameraBorderX) {
+        moveCameraX = x - player.x;
         x = game.width - player.height + game.cameraX - game.cameraBorderX;
     }
     if(y < game.cameraY) {
         y = game.cameraY;
     }
     if(x < game.cameraX + game.cameraBorderX) {
+        moveCameraX = x - player.x;
         x = game.cameraX + game.cameraBorderX;
     }
     
@@ -240,7 +245,7 @@ function collisionCheck(x, y) {
     if(x==NaN) x=player.x; // Failsafe
     if(y==NaN) y=player.y; // Failsafe
     
-    return {x, y};
+    return {x, y, moveCameraX, moveCameraY};
 }
 
 function onGround(x, y) {
@@ -304,14 +309,21 @@ function start() {
 }
 
 function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
+    var moveCameraX = 0;
+    var moveCameraY = 0;
+    
     applyGravity(speed);
     
     // Input / Output  -- temporary until gravity has been added
     if(keysDown.arrow_right || keysDown.key_d) {
-        player.x = collisionCheck(player.x + (player.speed * speed * game.speed), player.y).x;
+        var movementTable = collisionCheck(player.x + (player.speed * speed * game.speed), player.y);
+        moveCameraX = movementTable.moveCameraX;
+        player.x = movementTable.x;
     }
     if(keysDown.arrow_left || keysDown.key_a) {
-        player.x = collisionCheck(player.x - (player.speed * speed * game.speed), player.y).x;
+        var movementTable = collisionCheck(player.x - (player.speed * speed * game.speed), player.y)
+        moveCameraX = movementTable.moveCameraX;
+        player.x = movementTable.x;
     }
     
     handleJumping(speed);
@@ -322,6 +334,8 @@ function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
     for(i=0; i<objects.length; i++) { // object rendering
         objects[i].init();
     }
+    
+    game.cameraX += moveCameraX;
 }
 
 
