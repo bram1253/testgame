@@ -329,13 +329,13 @@ function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
     handleJumping(speed);
     
     // Rendering
-    player.init(); // player rendering
+    game.cameraX += moveCameraX;
+    
+    player.init();
     
     for(i=0; i<objects.length; i++) { // object rendering
         objects[i].init();
     }
-    
-    game.cameraX += moveCameraX;
 }
 
 
