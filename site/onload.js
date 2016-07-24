@@ -114,7 +114,7 @@ function gameObj() {
     
     this.cameraX = 0; // camera
     this.cameraY = 0; // camera
-    this.cameraBorderX = 80; // At which point the camera will start to scroll on the X axis
+    this.cameraBorderX = 120; // At which point the camera will start to scroll on the X axis
     this.cameraBorderY = 20; // At which point the camera will start to scroll on the Y axis
     
     // Init Variables
