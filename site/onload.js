@@ -135,8 +135,10 @@ function playerObj() {
     this.health = this.startingHealth;
     
     // Init Variables
-    this.x = 0;
-    this.y = 0;
+    this.spawnX = 260;
+    this.spawnY = 280;
+    this.x = this.spawnX;
+    this.y = this.spawnY;
     this.speed = 200; // How much pixels the player should move per second.
     this.force = 0; // gravity
     this.jumpForce = 500;
