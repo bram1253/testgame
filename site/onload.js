@@ -16,18 +16,17 @@
 */
 
 // === Variables === \\
-var objects = new Array();
+var objects = new Array;
 var platformID = 0; // The ID of the next platform
-var platformObjects = document.getElementById("platformObjects");
 
 var keysDown = {
     arrow_left:  false,
     arrow_right: false,
     arrow_up:    false,
     arrow_down:  false,
-    
+
     spacebar:    false,
-    
+
     key_w: false,
     key_a: false,
     key_s: false,
@@ -35,9 +34,27 @@ var keysDown = {
 };
 
 
+var canvas = document.getElementById("gameFrame");
+var ctx    = canvas.getContext("2d");
+
+
+function ClearScreen() {
+    ctx.fillStyle = "rgb(255,255,255)";
+    ctx.fillRect(0,0, game.width, game.height);
+}
+
+function DrawObjects() {
+    for(var i=0; i<objects.length; i++) {
+        var obj = objects[i];
+        ctx.fillStyle = obj.color;
+        ctx.fillRect(obj.x-game.cameraX, obj.y-game.cameraY, obj.width, obj.height);
+    }
+}
+
+
 
 // ==== Events ==== \\
-keyDown = function(key) {
+function keyDown(key) {
     switch(key.code) {
         case "ArrowLeft":
             keysDown["arrow_left"] = true;
@@ -68,8 +85,8 @@ keyDown = function(key) {
             break;
     }
 }
-    
-keyUp = function(key) {
+
+function keyUp(key) {
     switch(key.code) {
         case "ArrowLeft":
             keysDown["arrow_left"] = false;
@@ -101,8 +118,8 @@ keyUp = function(key) {
     }
 }
 
-document.onkeydown = this.keyDown;
-document.onkeyup = this.keyUp;
+document.onkeydown = keyDown;
+document.onkeyup = keyUp;
 
 
 
@@ -110,34 +127,32 @@ document.onkeyup = this.keyUp;
 function gameObj() {
     // Variables
     this.logFPS = false;
-    
+
     this.gravity = 1000; // The gavity, 1000=default
     this.speed = 1; // Speed of the game, 1=default
-    
+
     this.cameraX = 0; // camera
     this.cameraY = 0; // camera
     this.cameraBorderX = 120; // At which point the camera will start to scroll on the X axis
     this.cameraBorderY = 20; // At which point the camera will start to scroll on the Y axis
-    
+
     // Init Variables
     this.height = 480;
     this.width = 640;
-    this.color = "White";
-    this.HTMLObj = document.getElementById("gameFrame");
-    
-    // Init
-    this.init = function() {
-        this.HTMLObj.style["height"] = this.height;
-        this.HTMLObj.style["width"] = this.width;
-        this.HTMLObj.style["background-color"] = this.color;
-    }
+    this.color = "rgb(255,255,255)";
+
+    ctx.canvas.width = this.width;
+    ctx.canvas.height = this.height;
 }
 
 function playerObj() {
+    objects[objects.length] = this;
+
+
     // Variables
     this.startingHealth = 100;
     this.health = this.startingHealth;
-    
+
     // Init Variables
     this.spawnX = 260;
     this.spawnY = 280;
@@ -148,52 +163,19 @@ function playerObj() {
     this.jumpForce = 500;
     this.height = 40;
     this.width = 40;
-    this.color = "MediumPurple";
-    this.HTMLObj = document.getElementById("player");
-    
-    // Init
-    this.init = function() {
-        this.HTMLObj.style["background-color"] = this.color;
-        
-        this.HTMLObj.style["height"] = this.height;
-        this.HTMLObj.style["width"] = this.width;
-        
-        this.HTMLObj.style["left"] = this.x - game.cameraX;
-        this.HTMLObj.style["top"] = this.y - game.cameraY;
-    }
+    this.color = "rgb(50,0,255)";
 }
 
 function platformObj() {
+    objects[objects.length] = this;
+
+
     this.x = 0;
     this.y = 0;
-    
+
     this.height = 20;
     this.width = 120;
-    this.color = "Black";
-    this.HTMLObj;
-    this.platformName;
-    
-    // Make the platform
-        platformName = "platform_" + platformID;
-        var insertCode = "<div id=\"" + platformName + "\" class=\"platform\"></div>"
-
-        platformObjects.innerHTML = platformObjects.innerHTML + insertCode + "\n";
-        HTMLObj = document.getElementById(platformName);
-        
-        objects[platformID] = this; // Add the object in the objects array, each platformID should be unique and start with 0
-        
-        platformID++;
-    // End making the platform
-    
-    this.init = function() {
-        HTMLObj.style["background-color"] = this.color;
-        
-        HTMLObj.style["height"] = this.height;
-        HTMLObj.style["width"] = this.width;
-        
-        HTMLObj.style["left"] = this.x - game.cameraX;
-        HTMLObj.style["top"] = this.y - game.cameraY;
-    }
+    this.color = "rgb(0,0,0)";
 }
 
 
@@ -202,7 +184,7 @@ function platformObj() {
 function collisionCheck(x, y) {
     var moveCameraX = 0;
     var moveCameraY = 0;
-    
+
     if(y > game.height - player.height + game.cameraY) {
         y = game.height - player.height + game.cameraY;
     }
@@ -217,10 +199,10 @@ function collisionCheck(x, y) {
         moveCameraX = x - player.x;
         x = game.cameraX + game.cameraBorderX;
     }
-    
-    for(i=0; i<objects.length; i++) {
+
+    for(var i=0; i<objects.length; i++) {
         var obj = objects[i];
-        
+
         if((Number(y) + Number(player.height)) > Number(obj.y)) { // If the player is lower than the top platform
            if(Number(y) < (Number(obj.y) + Number(obj.height))) { // If the player is higher than the bottom of the platform
                if((Number(x) + Number(player.width)) > Number(obj.x)) { // If the player is right to the left of the platform
@@ -242,11 +224,11 @@ function collisionCheck(x, y) {
            }
         }
     }
-    
-    
+
+
     if(x==NaN) x=player.x; // Failsafe
     if(y==NaN) y=player.y; // Failsafe
-    
+
     return {x, y, moveCameraX, moveCameraY};
 }
 
@@ -268,20 +250,20 @@ function hittingRoof(x, y) {
 
 function applyGravity(speed) {
     // Still have to add enemies in here (when they are added)!
-    
+
     // Apply the force
     player.force += (game.gravity * game.speed)*speed;
-    
+
     // If they are on the ground and there is a downwards force
     if(onGround(player.x, player.y) && player.force >= 0) {
         player.force = 0;
     }
-    
+
     // If they are hitting a roof and there is an upwards force
     if(hittingRoof(player.x, player.y) && player.force < 0) {
         player.force = 0;
     }
-    
+
     // Apple the positioning
     var newY = player.y + (player.force * speed * game.speed);
     player.y = collisionCheck(player.x, newY).y;
@@ -303,19 +285,16 @@ var player = new playerObj();
 var tmp_testplatform = new platformObj();
 
 function start() {
-    game.init();
-    player.init();
     tmp_testplatform.x = 200; // tmp
     tmp_testplatform.y = 400; // tmp
-    tmp_testplatform.init();  // tmp
 }
 
 function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
     var moveCameraX = 0;
     var moveCameraY = 0;
-    
+
     applyGravity(speed);
-    
+
     // Input / Output  -- temporary until gravity has been added
     if(keysDown.arrow_right || keysDown.key_d) {
         var movementTable = collisionCheck(player.x + (player.speed * speed * game.speed), player.y);
@@ -323,21 +302,19 @@ function tick(speed) { // 1speed=1sec 0.5speed=2sec 4speed=0.25sec
         player.x = movementTable.x;
     }
     if(keysDown.arrow_left || keysDown.key_a) {
-        var movementTable = collisionCheck(player.x - (player.speed * speed * game.speed), player.y)
+        var movementTable = collisionCheck(player.x - (player.speed * speed * game.speed), player.y);
         moveCameraX = movementTable.moveCameraX;
         player.x = movementTable.x;
     }
-    
+
     handleJumping(speed);
-    
+
     // Rendering
-    game.cameraX += moveCameraX;
-    
-    player.init();
-    
-    for(i=0; i<objects.length; i++) { // object rendering
-        objects[i].init();
-    }
+    //game.cameraX += moveCameraX;
+
+
+    ClearScreen();
+    DrawObjects();
 }
 
 
@@ -355,18 +332,18 @@ setInterval(function() {
     var endDate = new Date();
     var endTime = endDate.getMilliseconds();
     var timeTaken;
-    
+
     if(startTime > endTime) { // In case startTime=998 and endTime=4 or a similar case
         timeTaken = (endTime + 1000) - startTime;
     } else {
         timeTaken = endTime - startTime;
     }
-    
+
     if(game.logFPS) {
         console.log(1000 / timeTaken);
     }
-    
+
     nextSpeed = timeTaken / 1000;
     startDate = new Date();
     startTime = startDate.getMilliseconds();
-}, 1)
+}, 1);

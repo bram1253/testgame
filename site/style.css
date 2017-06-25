@@ -15,16 +15,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+body {
+    background: black;
+}
+
 #gameFrame {
     position: absolute;
     left: 0px;
     top: 0px;
-}
+    width: 640;
+    height: 480;
 
-#player  {
-    position: absolute;
-}
-
-.platform {
-    position: absolute;
+    background: white;
 }
